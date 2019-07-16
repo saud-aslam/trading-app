@@ -1,7 +1,6 @@
 package ca.jrvs.apps.trading.dao;
 
 import ca.jrvs.apps.trading.model.config.MarketDataConfig;
-import com.google.common.base.Joiner;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.HttpClientConnectionManager;
@@ -12,9 +11,9 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.dao.DataRetrievalFailureException;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ConnectionManager {
 
@@ -34,16 +33,15 @@ public class ConnectionManager {
         marketDataConfig.setHost("https://cloud.iexapis.com/");
         marketDataConfig.setToken("pk_22792cfad91547bb99f9c84f1c5041e2");
         ConnectionManager connectionManager= new ConnectionManager(httpClientConnectionManager,marketDataConfig);
-        List<String> symbols= Arrays.asList("aapl","fb");
-        String string = Joiner.on(",").join(symbols);
 
+        List<String> symbols = Arrays.asList("aal", "aapl", "fb");
+        //Join List of Strings to a String
+        String symbolsInString = symbols.stream().map(String::valueOf).collect(Collectors.joining(","));
+        //appending url
+        StringBuilder url = new StringBuilder();
+        url.append("https://cloud.iexapis.com/stable/stock/market/batch?symbols=").append(symbolsInString).append("&types=quote&token=pk_22792cfad91547bb99f9c84f1c5041e2");
 
-
-        // print string
-        System.out.println(string);
-
-
-        System.out.println(connectionManager.parseResponseBody(connectionManager.getHttpClientAndResponseAfterExecution("https://cloud.iexapis.com/stable/stock/market/batch?symbols=%s&types=quote&token=pk_22792cfad91547bb99f9c84f1c5041e2")));
+        System.out.println(connectionManager.parseResponseBody(connectionManager.getHttpClientAndResponseAfterExecution(url.toString())));
     }
 
     public static HttpClientConnectionManager httpClientConnectionManager(int min, int max) {
