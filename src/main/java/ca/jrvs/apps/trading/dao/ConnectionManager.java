@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 import static ca.jrvs.apps.trading.util.JsonUtil.toObjectFromJson;
 
+
 public class ConnectionManager {
 
     private final String BATCH_QUOTE_URL;
@@ -76,7 +77,7 @@ public class ConnectionManager {
     public static void UnmarshallJson(String JsonResponse) {
         JSONObject obj = new JSONObject(JsonResponse);
         List<IexQuote> iexQuotes = new ArrayList<>();
-        Iterator<String> SymbolsList = obj.keys();
+        Iterator<String> SymbolsList = obj.keys(); //tickers extract
         while (SymbolsList.hasNext()) {
             // System.out.print(SymbolsList.next() + " ");
             String quote = ((JSONObject) obj.get(SymbolsList.next())).get("quote").toString();

@@ -40,6 +40,7 @@ public class QuoteDao implements CrudRepository<Quote, String> {
         return false;
     }
 
+    //jxjk
     @Override
     public void deleteByID(String s) {
 

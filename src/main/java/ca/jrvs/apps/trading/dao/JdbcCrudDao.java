@@ -40,7 +40,7 @@ public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepositor
 
     }
 
-    //Helper method
+    //Helper methodn
     public void deleteById(String idName, ID id) {
     }
 
