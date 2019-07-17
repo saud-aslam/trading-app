@@ -1,6 +1,7 @@
 package ca.jrvs.apps.trading.dao;
 
 import ca.jrvs.apps.trading.model.config.MarketDataConfig;
+import ca.jrvs.apps.trading.model.dto.IexQuote;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.HttpClientConnectionManager;
@@ -8,12 +9,17 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 import org.springframework.dao.DataRetrievalFailureException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static ca.jrvs.apps.trading.util.JsonUtil.toObjectFromJson;
 
 public class ConnectionManager {
 
@@ -28,20 +34,21 @@ public class ConnectionManager {
 
     public static void main(String[] args) {
 
-        HttpClientConnectionManager httpClientConnectionManager=httpClientConnectionManager(20, 100);
-        MarketDataConfig marketDataConfig= new MarketDataConfig();
+        HttpClientConnectionManager httpClientConnectionManager = httpClientConnectionManager(20, 100);
+        MarketDataConfig marketDataConfig = new MarketDataConfig();
         marketDataConfig.setHost("https://cloud.iexapis.com/");
         marketDataConfig.setToken("pk_22792cfad91547bb99f9c84f1c5041e2");
-        ConnectionManager connectionManager= new ConnectionManager(httpClientConnectionManager,marketDataConfig);
+        ConnectionManager connectionManager = new ConnectionManager(httpClientConnectionManager, marketDataConfig);
 
-        List<String> symbols = Arrays.asList("aal", "aapl", "fb");
+        List<String> symbols = Arrays.asList("aal", "fb");
         //Join List of Strings to a String
         String symbolsInString = symbols.stream().map(String::valueOf).collect(Collectors.joining(","));
-        //appending url
+        //appending url pk_22792cfad91547bb99f9c84f1c5041e2
         StringBuilder url = new StringBuilder();
-        url.append("https://cloud.iexapis.com/stable/stock/market/batch?symbols=").append(symbolsInString).append("&types=quote&token=pk_22792cfad91547bb99f9c84f1c5041e2");
-
-        System.out.println(connectionManager.parseResponseBody(connectionManager.getHttpClientAndResponseAfterExecution(url.toString())));
+        url.append(marketDataConfig.getHost() + "stable/stock/market/batch?symbols=").append(symbolsInString).append("&types=quote&token=" + marketDataConfig.getToken());
+        String resp = connectionManager.parseResponseBody(connectionManager.getHttpClientAndResponseAfterExecution(url.toString()));
+        UnmarshallJson(resp);
+        System.out.println(resp);
     }
 
     public static HttpClientConnectionManager httpClientConnectionManager(int min, int max) {
@@ -66,8 +73,30 @@ public class ConnectionManager {
         }
     }
 
+    public static void UnmarshallJson(String JsonResponse) {
+        JSONObject obj = new JSONObject(JsonResponse);
+        List<IexQuote> iexQuotes = new ArrayList<>();
+        Iterator<String> SymbolsList = obj.keys();
+        while (SymbolsList.hasNext()) {
+            // System.out.print(SymbolsList.next() + " ");
+            String quote = ((JSONObject) obj.get(SymbolsList.next())).get("quote").toString();
+            try {
+                IexQuote iexQuote = toObjectFromJson(quote, IexQuote.class);
+                iexQuotes.add(iexQuote);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // JSONArray quote = obj.getJSONArray("AAL");
+        System.out.println("IexQUOTE: " + iexQuotes);
+        // System.out.println(quote);
+
+    }
+
     public String parseResponseBody(CloseableHttpResponse response) {
         int status = response.getStatusLine().getStatusCode();
+
         switch (status) {
             case 200:
                 try {
