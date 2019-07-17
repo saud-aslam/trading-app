@@ -1,13 +1,9 @@
 package ca.jrvs.apps.trading.model.dto;
 
+import com.fasterxml.jackson.annotation.*;
+
 import java.util.HashMap;
-        import java.util.Map;
-        import com.fasterxml.jackson.annotation.JsonAnyGetter;
-        import com.fasterxml.jackson.annotation.JsonAnySetter;
-        import com.fasterxml.jackson.annotation.JsonIgnore;
-        import com.fasterxml.jackson.annotation.JsonInclude;
-        import com.fasterxml.jackson.annotation.JsonProperty;
-        import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -19,7 +15,7 @@ import java.util.HashMap;
         "lastPrice",
         "ticker"
 })
-public class Quote implements Entity  {
+public class Quote implements Entity<String> {
 
     @JsonProperty("askPrice")
     private Integer askPrice;
@@ -119,12 +115,9 @@ public class Quote implements Entity  {
     }
 
     @Override
-    public Object getID() {
+    public String getID() {
         return null;
     }
 
-    @Override
-    public void setId(Object o) {
 
-    }
 }
