@@ -105,7 +105,7 @@ public class MarketDataDao {
                     e.printStackTrace();
                 }
             default:
-                throw new DataRetrievalFailureException("Error: " + status);
+                throw new DataRetrievalFailureException("Error Status: " + status);
         }
 
     }
