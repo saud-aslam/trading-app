@@ -1,12 +1,13 @@
-/*package ca.jrvs.apps.trading;
+package ca.jrvs.apps.trading;
 
 import ca.jrvs.apps.trading.model.config.MarketDataConfig;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.transaction.PlatformTransactionManager;
-
-import javax.sql.DataSource;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
@@ -14,12 +15,14 @@ public class AppConfig {
 
     private Logger logger = LoggerFactory.getLogger(AppConfig.class);
 
-    @Value("${iex.host}")
-    private String iex_host;
+    // @Value("${iex.host}")
+    // private String iex_host;
 
-    @Bean
+  /*  @Bean
     public PlatformTransactionManager txManager(DataSource dataSource) {
     }
+
+   */
 
     @Bean
     public MarketDataConfig marketDataConfig() {
@@ -29,9 +32,11 @@ public class AppConfig {
         return marketDataConfig;
     }
 
-    @Bean
+/*    @Bean
     public DataSource dataSource() {
     }
+
+ */
 
     //http://bit.ly/2tWTmzQ connectionPool
     @Bean
@@ -43,4 +48,3 @@ public class AppConfig {
     }
 }
 
- */

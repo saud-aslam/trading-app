@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,6 +38,7 @@ public class MarketDataDao {
 
     }
 
+
     public List<IexQuote> UnmarshallJson(List<String> symbols) {
 
         String symbolsInString = symbols.stream().map(String::valueOf).collect(Collectors.joining(","));
@@ -57,10 +59,20 @@ public class MarketDataDao {
                 e.printStackTrace();
             }
         }
-
+        System.out.println(iexQuotes);
         return iexQuotes;
 
     }
+
+    public IexQuote UnmarshallJson(String symbol) {
+        List<IexQuote> quotes = UnmarshallJson(Arrays.asList(symbol));
+        if (quotes == null || quotes.size() != 1) {
+            throw new DataRetrievalFailureException("Unable to get data");
+        }
+        return quotes.get(0);
+
+    }
+
 
     public CloseableHttpClient getClientFromPool() {
         return HttpClients.custom().setConnectionManager(httpClientConnectionManager).setConnectionManagerShared(true)
