@@ -22,15 +22,17 @@ public class QuoteDao implements CrudRepository<Quote, String> {
     public QuoteDao(DataSource dataSource) {
         jdbcTemplate = new JdbcTemplate(dataSource);
         simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
-                .withTableName(TABLE_NAME)
-                .usingGeneratedKeyColumns(ID_NAME);
+                .withTableName(TABLE_NAME);
     }
 
     @Override
     public Quote save(Quote entity) {
+
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(entity);
-        Number newId = simpleJdbcInsert.executeAndReturnKey(parameterSource);
-        return null;
+        simpleJdbcInsert.execute(parameterSource);
+        return entity;
+
+
     }
 
     @Override
@@ -43,11 +45,12 @@ public class QuoteDao implements CrudRepository<Quote, String> {
         return false;
     }
 
-    //jxjk
     @Override
     public void deleteByID(String s) {
 
     }
 }
+
+
 
 

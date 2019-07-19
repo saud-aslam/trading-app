@@ -1,6 +1,7 @@
 package ca.jrvs.apps.trading;
 
 import ca.jrvs.apps.trading.model.config.MarketDataConfig;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.slf4j.Logger;
@@ -8,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
@@ -32,11 +35,16 @@ public class AppConfig {
         return marketDataConfig;
     }
 
-/*    @Bean
+    @Bean
     public DataSource dataSource() {
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/jrvstrading");
+        dataSource.setUsername("postgres");
+        dataSource.setPassword("password");
+
+        return dataSource;
     }
 
- */
 
     //http://bit.ly/2tWTmzQ connectionPool
     @Bean

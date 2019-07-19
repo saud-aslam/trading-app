@@ -1,6 +1,6 @@
 package ca.jrvs.apps.trading.model.dto;
 
 public interface Entity<ID> {
-    ID getID();
+    ID getId();
     void setId(ID id);
 }
