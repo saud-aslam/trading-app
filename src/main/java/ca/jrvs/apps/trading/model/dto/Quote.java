@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.Objects;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "ticker",
@@ -101,6 +103,24 @@ public class Quote implements Entity<String> {
         this.id = id;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Quote)) return false;
+        Quote quote = (Quote) o;
+        return Objects.equals(getTicker(), quote.getTicker()) &&
+                Objects.equals(getLastPrice(), quote.getLastPrice()) &&
+                Objects.equals(getBidPrice(), quote.getBidPrice()) &&
+                Objects.equals(getBidSize(), quote.getBidSize()) &&
+                Objects.equals(getAskPrice(), quote.getAskPrice()) &&
+                Objects.equals(getAskSize(), quote.getAskSize()) &&
+                Objects.equals(getId(), quote.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTicker(), getLastPrice(), getBidPrice(), getBidSize(), getAskPrice(), getAskSize(), getId());
+    }
 
     @Override
     public String toString() {

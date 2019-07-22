@@ -42,7 +42,7 @@ public class QuoteServiceTest {
         testQuote.setAskPrice(19.00);
 
         Quote expectedQuote = quoteService.buildQuoteFromIexQuote(iexQuote);
-        
+        assertEquals(testQuote, expectedQuote);
         assertEquals(testQuote.getAskPrice(), expectedQuote.getAskPrice());
         assertEquals(testQuote.getAskSize(), expectedQuote.getAskSize());
         assertEquals(testQuote.getId(), expectedQuote.getId());

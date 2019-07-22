@@ -1,4 +1,4 @@
-/*package ca.jrvs.apps.trading;
+package ca.jrvs.apps.trading;
 
 import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
 
-import static springfox.documentation.builders.RequestHandlerSelectors.any;
+import static springfox.documentation.builders.PathSelectors.any;
 
 @Configuration
 @EnableSwagger2
@@ -29,7 +29,7 @@ public class SwaggerConfig {
                 .build()
                 .pathMapping("/")
                 .apiInfo(new ApiInfo("Jarvis Trading Rest App", "A Spring Rest API", "v1.0", null,
-                        new Contact("Edward Wang", "jrvs.ca", "edward@jrvs.ca"), null, null,
+                        new Contact("Saud Aslam", "jrvs.ca", "saud.aslam.jrvs.ca@gmail.com"), null, null,
                         new ArrayList<>()));
     }
 
@@ -54,4 +54,3 @@ public class SwaggerConfig {
     }
 }
 
- */

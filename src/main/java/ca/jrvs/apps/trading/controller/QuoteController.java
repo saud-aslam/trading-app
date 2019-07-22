@@ -1,28 +1,18 @@
-/*
+
 package ca.jrvs.apps.trading.controller;
 
 import ca.jrvs.apps.trading.dao.MarketDataDao;
 import ca.jrvs.apps.trading.dao.QuoteDao;
+import ca.jrvs.apps.trading.model.dto.IexQuote;
 import ca.jrvs.apps.trading.service.QuoteService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import java.util.Collections;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import ca.jrvs.apps.trading.model.dto.*;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 @Controller
@@ -40,8 +30,8 @@ public class QuoteController {
       //  this.quoteDao = quoteDao;
         this.marketDataDao = marketDataDao;
     }
-
-   /* @PutMapping(path = "/iexMarketData")
+/*
+    @PutMapping(path = "/iexMarketData")
     @ResponseStatus(HttpStatus.OK)
     public void updateMarketData() {
         try {
@@ -83,6 +73,8 @@ public class QuoteController {
         }
     }
 
+ */
+
 
     @GetMapping(path = "/iex/ticker/{ticker}")
     @ResponseStatus(HttpStatus.OK)
@@ -94,9 +86,23 @@ public class QuoteController {
             throw new RuntimeException(e);
         }
     }
+
+    @GetMapping(path = "/iex/tickersInBatch/{ticker}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<IexQuote> getBatchQuote(@PathVariable String ticker) {
+        try {
+            List<String> tickers = new ArrayList<String>(Arrays.asList(ticker.split(",")));
+
+            return marketDataDao.UnmarshallJson(tickers);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
 
 
 
 
-   */
+
