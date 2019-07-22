@@ -19,15 +19,15 @@ public class Quote implements Entity<String> {
     @JsonProperty("ticker")
     private String ticker;
     @JsonProperty("lastPrice")
-    private Double lastPrice = Double.valueOf(0);
+    private Double lastPrice; //= Double.valueOf(0);
     @JsonProperty("bidPrice")
-    private Double bidPrice = Double.valueOf(0);
+    private Double bidPrice;//= Double.valueOf(0);
     @JsonProperty("bidSize")
-    private Long bidSize = Long.valueOf(0);
+    private Long bidSize;//= Long.valueOf(0);
     @JsonProperty("askPrice")
-    private Double askPrice = Double.valueOf(0);
+    private Double askPrice;// = Double.valueOf(0);
     @JsonProperty("askSize")
-    private Long askSize = Long.valueOf(0);
+    private Long askSize;//= Long.valueOf(0);
     @JsonProperty("id")
     private String id;
 

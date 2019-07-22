@@ -29,11 +29,10 @@ public class QuoteService {
      * Note: `iexQuote.getLatestPrice() == null` if the stock market is closed.
      * Make sure set a default value for number field(s).
      */
-    public static Quote buildQuoteFromIexQuote(IexQuote iexQuote) {
+    public Quote buildQuoteFromIexQuote(IexQuote iexQuote) {
         Quote quote = new Quote();
 
         if (iexQuote.getLatestPrice() != null) {
-            iexQuote.setIexAskPrice(29.99);//testing
             quote.setLastPrice(iexQuote.getLatestPrice());
             quote.setAskPrice(iexQuote.getIexAskPrice());
             quote.setAskSize(iexQuote.getIexAskSize());
@@ -42,6 +41,9 @@ public class QuoteService {
             quote.setId(iexQuote.getSymbol());
             quote.setTicker(iexQuote.getSymbol());
         }
+
+        if (quote == null)
+            throw new IllegalArgumentException("Quote is Null");
         return quote;
     }
 

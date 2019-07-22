@@ -531,4 +531,49 @@ public class IexQuote {
         this.additionalProperties.put(name, value);
     }
 
+    @Override
+    public String toString() {
+        return "IexQuote{" +
+                "symbol='" + symbol + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", calculationPrice='" + calculationPrice + '\'' +
+                ", open=" + open +
+                ", openTime=" + openTime +
+                ", close=" + close +
+                ", closeTime=" + closeTime +
+                ", high=" + high +
+                ", low=" + low +
+                ", latestPrice=" + latestPrice +
+                ", latestSource='" + latestSource + '\'' +
+                ", latestTime='" + latestTime + '\'' +
+                ", latestUpdate=" + latestUpdate +
+                ", latestVolume=" + latestVolume +
+                ", iexRealtimePrice=" + iexRealtimePrice +
+                ", iexRealtimeSize=" + iexRealtimeSize +
+                ", iexLastUpdated=" + iexLastUpdated +
+                ", delayedPrice=" + delayedPrice +
+                ", delayedPriceTime=" + delayedPriceTime +
+                ", extendedPrice=" + extendedPrice +
+                ", extendedChange=" + extendedChange +
+                ", extendedChangePercent=" + extendedChangePercent +
+                ", extendedPriceTime=" + extendedPriceTime +
+                ", previousClose=" + previousClose +
+                ", change=" + change +
+                ", changePercent=" + changePercent +
+                ", iexMarketPercent=" + iexMarketPercent +
+                ", iexVolume=" + iexVolume +
+                ", avgTotalVolume=" + avgTotalVolume +
+                ", iexBidPrice=" + iexBidPrice +
+                ", iexBidSize=" + iexBidSize +
+                ", iexAskPrice=" + iexAskPrice +
+                ", iexAskSize=" + iexAskSize +
+                ", marketCap=" + marketCap +
+                ", peRatio=" + peRatio +
+                ", week52High=" + week52High +
+                ", week52Low=" + week52Low +
+                ", ytdChange=" + ytdChange +
+                ", lastTradeTime=" + lastTradeTime +
+                ", additionalProperties=" + additionalProperties +
+                '}';
+    }
 }
