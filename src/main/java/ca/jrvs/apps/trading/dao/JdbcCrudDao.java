@@ -94,26 +94,25 @@ public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepositor
 
     @SuppressWarnings("unchecked")
     public E findById(String idName, ID id, boolean forUpdate, Class clazz) {
-        E t = null;
+        E quote = null;
         String selectSql = "SELECT * FROM " + TableName + " WHERE " + idName + " =?";
 
-        //Advanced: handle read + update race condition
         if (forUpdate) {
             selectSql += " for update";
         }
         logger.info(selectSql);
 
         try {
-            t = (E) jdbcTemplate
+            quote = (E) jdbcTemplate
                     .queryForObject(selectSql,
                             BeanPropertyRowMapper.newInstance(clazz), id);
         } catch (EmptyResultDataAccessException e) {
-            logger.debug("Can't find trader id:" + id, e);
+            logger.debug("Can't find quote id:" + id, e);
         }
-        if (t == null) {
+        if (quote == null) {
             throw new ResourceNotFoundException("Resource not found");
         }
-        return t;
+        return quote;
     }
 
     @Override
