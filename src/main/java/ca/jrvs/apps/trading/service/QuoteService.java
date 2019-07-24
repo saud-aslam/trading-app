@@ -2,6 +2,7 @@ package ca.jrvs.apps.trading.service;
 
 import ca.jrvs.apps.trading.dao.MarketDataDao;
 import ca.jrvs.apps.trading.dao.QuoteDao;
+import ca.jrvs.apps.trading.dao.ResourceNotFoundException;
 import ca.jrvs.apps.trading.model.dto.IexQuote;
 import ca.jrvs.apps.trading.model.dto.Quote;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,17 @@ public class QuoteService {
      * @throws IllegalArgumentException                    for invalid input
      */
     public void initQuotes(List<String> tickers) {
-        //buildQuoteFromIexQuote helper method is used here
+
+        for (String ticker : tickers) {
+
+            IexQuote iexQuote = marketDataDao.UnmarshallJson(ticker);
+            if (iexQuote == null) {
+                throw new ResourceNotFoundException("Resource not found");
+            }
+            quoteDao.save(buildQuoteFromIexQuote(iexQuote));
+
+        }
+
     }
 
     /**
@@ -87,5 +98,6 @@ public class QuoteService {
      * @throws IllegalArgumentException                    for invalid input
      */
     public void updateMarketData() {
+
     }
 }

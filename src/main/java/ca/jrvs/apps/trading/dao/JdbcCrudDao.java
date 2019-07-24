@@ -22,7 +22,7 @@ public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepositor
     private String IdName;
     private Class ClassName;
     private SimpleJdbcInsert simpleJdbcInsert;
-    private JdbcTemplate jdbcTemplate;
+    public JdbcTemplate jdbcTemplate;
     private boolean ReturnKey;
 
     // Constructor: would be called in subclass by using keyword:super;
@@ -125,11 +125,9 @@ public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepositor
             throw new IllegalArgumentException("ID can't be null");
         }
         String selectSql = "SELECT count(*) FROM " + TableName + " WHERE " + idName + " =?";
-        logger.info(selectSql);
-        Integer count = jdbcTemplate
-                .queryForObject(selectSql,
-                        Integer.class, id);
-        return count != 0;
+        int checker = jdbcTemplate.queryForObject(selectSql, Integer.class, id);
+        logger.info(String.valueOf(checker) + ":1 means successful deletion, 0 means unsucessful deletion ");
+        return (checker == 1) ? true : false;
     }
 
 }

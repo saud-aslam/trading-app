@@ -2,6 +2,7 @@
 
 package ca.jrvs.apps.trading.service;
 
+import ca.jrvs.apps.trading.dao.MarketDataDao;
 import ca.jrvs.apps.trading.model.dto.IexQuote;
 import ca.jrvs.apps.trading.model.dto.Quote;
 import org.junit.Test;
@@ -20,6 +21,7 @@ public class QuoteServiceTest {
 
     @Autowired
     private QuoteService quoteService;
+    private MarketDataDao marketDataDao;
 
     @Test
     public void buildQuoteFromIexQuote() {
@@ -49,6 +51,13 @@ public class QuoteServiceTest {
         assertEquals(testQuote.getTicker(), expectedQuote.getTicker());
         assertEquals(testQuote.getBidPrice(), expectedQuote.getBidPrice());
         assertEquals(testQuote.getBidSize(), expectedQuote.getBidSize());
+
+    }
+
+    @Test
+    public void initQuotes() {
+
+        quoteService.initQuote("mcd");
 
     }
 }

@@ -4,6 +4,7 @@ package ca.jrvs.apps.trading.controller;
 import ca.jrvs.apps.trading.dao.MarketDataDao;
 import ca.jrvs.apps.trading.dao.QuoteDao;
 import ca.jrvs.apps.trading.model.dto.IexQuote;
+import ca.jrvs.apps.trading.model.dto.Quote;
 import ca.jrvs.apps.trading.service.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,15 +20,15 @@ import java.util.List;
 @RequestMapping("/quote")
 public class QuoteController {
 
-   // private QuoteService quoteService;
-   // private QuoteDao quoteDao;
+    private QuoteService quoteService;
+    private QuoteDao quoteDao;
     private MarketDataDao marketDataDao;
 
     @Autowired
     public QuoteController(QuoteService quoteService, QuoteDao quoteDao,
                            MarketDataDao marketDataDao) {
-       // this.quoteService = quoteService;
-      //  this.quoteDao = quoteDao;
+        this.quoteService = quoteService;
+        this.quoteDao = quoteDao;
         this.marketDataDao = marketDataDao;
     }
 /*
@@ -51,13 +52,14 @@ public class QuoteController {
         }
     }
 
+ */
     @PostMapping(path = "/tickerId/{tickerId}")
     @ResponseStatus(HttpStatus.CREATED)
     public void createQuote(@PathVariable String tickerId) {
         try {
             quoteService.initQuote(tickerId);
         } catch (Exception e) {
-            throw ResponseExceptionUtil.getResponseStatusException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -69,12 +71,9 @@ public class QuoteController {
         try {
             return quoteDao.findAll();
         } catch (Exception e) {
-            throw ResponseExceptionUtil.getResponseStatusException(e);
+            throw new RuntimeException(e);
         }
     }
-
- */
-
 
     @GetMapping(path = "/iex/ticker/{ticker}")
     @ResponseStatus(HttpStatus.OK)

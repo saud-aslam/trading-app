@@ -15,6 +15,7 @@ public class MarketDataDaoTest {
         marketDataConfig.setToken("pk_22792cfad91547bb99f9c84f1c5041e2");
         MarketDataDao dao = new MarketDataDao(cm, marketDataConfig);
         dao.UnmarshallJson(Arrays.asList("aal", "fb"));
+        dao.UnmarshallJson("aal");
 
     }
 
