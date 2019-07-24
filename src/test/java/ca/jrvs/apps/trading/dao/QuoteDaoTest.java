@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ca.jrvs.apps.trading.TestConfig.class,
@@ -19,12 +19,40 @@ public class QuoteDaoTest {
     private QuoteDao quoteDao;
 
     @Test
-    public void save() {
-        Quote quote = new Quote();
-        quote.setAskPrice(10.0);
-        quote.setTicker("FB");
-        System.out.println(quote);
-        assertEquals(quote, quoteDao.save(quote));
+    public void saveAnddeletebyId() {
 
+        assertFalse(quoteDao.deleteById("HAHA"));
+
+        Quote quote = new Quote();
+        quote.setAskPrice(100.0);
+        quote.setTicker("Fake");
+        quote.setAskSize((long) 100.00);
+        quote.setBidSize((long) 123.00);
+        quote.setBidPrice(122.0);
+        quote.setId("Fake");
+        quote.setLastPrice(12.0);
+        assertEquals(quote, quoteDao.save(quote));
+        assertTrue(quoteDao.deleteById("Fake"));
+
+    }
+
+    @Test
+    public void findbyId() {
+        Quote quote = quoteDao.findById("FB");
+        assertEquals("FB", quote.getTicker());
+
+    }
+
+    @Test
+    public void findbyIdForUpdate() {
+        Quote quote = quoteDao.findByIdForUpdate("FB");
+        assertEquals("FB", quote.getTicker());
+    }
+
+    @Test
+    public void existbyId() {
+
+        assertTrue(quoteDao.existsById("FB"));
+        assertFalse(quoteDao.existsById("HAHAHA"));
     }
 }

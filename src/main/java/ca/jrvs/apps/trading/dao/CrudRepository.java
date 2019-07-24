@@ -7,5 +7,5 @@ public interface CrudRepository<E, ID> {
 
     boolean existsById(ID id);
 
-    void deleteByID(ID id);
+    boolean deleteById(ID id);
 }

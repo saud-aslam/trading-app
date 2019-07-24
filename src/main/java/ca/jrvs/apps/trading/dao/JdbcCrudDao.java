@@ -1,47 +1,136 @@
 package ca.jrvs.apps.trading.dao;
 
 import ca.jrvs.apps.trading.model.dto.Entity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
-public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepository {
-    abstract public JdbcTemplate getJdbcTemplate();
+import javax.sql.DataSource;
 
-    abstract public SimpleJdbcInsert getSimpleJdbcInsert();
+public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepository<E, ID> {
 
-    abstract public String getTableName();
+    private static final Logger logger = LoggerFactory.getLogger(JdbcCrudDao.class);
 
-    abstract public String getName();
+    private String TableName;
+    private String IdName;
+    private Class ClassName;
+    private SimpleJdbcInsert simpleJdbcInsert;
+    private JdbcTemplate jdbcTemplate;
+    private boolean ReturnKey;
 
-    abstract Class getEntityClass();
+    // Constructor: would be called in subclass by using keyword:super;
+    public JdbcCrudDao(DataSource dataSource, String TableName, String IdName, Class ClassName, boolean ReturnKey) {
+        this.TableName = TableName;
+        this.IdName = IdName;
+        this.ClassName = ClassName;
+        this.ReturnKey = ReturnKey;
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
 
+        if (ReturnKey) {
+            this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName(TableName).usingGeneratedKeyColumns(IdName);
+        } else {
+            this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName(TableName);
+        }
+
+    }
+
+    @SuppressWarnings("unchecked")
     @Override
-    public Object save(Object entity) {
-        return null;
+    public E save(E entity) {
+        SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(entity);
+        try {
+            if (ReturnKey) {
+                Number newId = simpleJdbcInsert.executeAndReturnKey(parameterSource);
+                entity.setId(newId.intValue());
+
+            } else {
+                simpleJdbcInsert.execute(parameterSource);
+            }
+        } catch (DuplicateKeyException e) {
+            logger.debug(entity.getId() + " is already in " + TableName);
+        } catch (InvalidDataAccessApiUsageException e) {
+            logger.debug(TableName + " has no generated keys.");
+        }
+        return entity;
     }
 
     @Override
-    public Object findById(Object o) {
-        return null;
+    public boolean deleteById(ID id) {
+        return deleteById(IdName, id);
     }
 
-    //Helper method
+    public boolean deleteById(String idName, ID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID is null");
+        }
+        String deleteSql = "DELETE FROM " + TableName + " WHERE " + idName + " =?";
+        int checker = jdbcTemplate.update(deleteSql, id);
+        logger.info(String.valueOf(checker) + ":1 means successful deletion, 0 means unsucessful deletion ");
+        return (checker == 1) ? true : false;
+    }
+
+    @Override
+    public E findById(ID id) {
+        return findById(IdName, id, false, ClassName);
+    }
+
+    public E findByIdForUpdate(ID id) {
+
+        return findById(IdName, id, true, ClassName);
+    }
+
+    /**
+     * @return an entity
+     * @throws java.sql.SQLException     if sql execution failed
+     * @throws ResourceNotFoundException if no entity is found in db
+     */
+
+    @SuppressWarnings("unchecked")
     public E findById(String idName, ID id, boolean forUpdate, Class clazz) {
-        return null;
+        E t = null;
+        String selectSql = "SELECT * FROM " + TableName + " WHERE " + idName + " =?";
+
+        //Advanced: handle read + update race condition
+        if (forUpdate) {
+            selectSql += " for update";
+        }
+        logger.info(selectSql);
+
+        try {
+            t = (E) jdbcTemplate
+                    .queryForObject(selectSql,
+                            BeanPropertyRowMapper.newInstance(clazz), id);
+        } catch (EmptyResultDataAccessException e) {
+            logger.debug("Can't find trader id:" + id, e);
+        }
+        if (t == null) {
+            throw new ResourceNotFoundException("Resource not found");
+        }
+        return t;
     }
 
     @Override
-    public boolean existsById(Object o) {
-        return false;
+    public boolean existsById(ID id) {
+        return existsById(IdName, id);
     }
 
-    @Override
-    public void deleteByID(Object o) {
-
-    }
-
-    //Helper methodn
-    public void deleteById(String idName, ID id) {
+    public boolean existsById(String idName, ID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID can't be null");
+        }
+        String selectSql = "SELECT count(*) FROM " + TableName + " WHERE " + idName + " =?";
+        logger.info(selectSql);
+        Integer count = jdbcTemplate
+                .queryForObject(selectSql,
+                        Integer.class, id);
+        return count != 0;
     }
 
 }
