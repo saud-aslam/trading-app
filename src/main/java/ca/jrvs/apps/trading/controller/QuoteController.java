@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -31,14 +32,14 @@ public class QuoteController {
         this.quoteDao = quoteDao;
         this.marketDataDao = marketDataDao;
     }
-/*
+
     @PutMapping(path = "/iexMarketData")
     @ResponseStatus(HttpStatus.OK)
     public void updateMarketData() {
         try {
             quoteService.updateMarketData();
         } catch (Exception e) {
-            throw ResponseExceptionUtil.getResponseStatusException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -48,11 +49,10 @@ public class QuoteController {
         try {
             quoteDao.update(Collections.singletonList(quote));
         } catch (Exception e) {
-            throw ResponseExceptionUtil.getResponseStatusException(e);
+            throw new RuntimeException(e);
         }
     }
 
- */
     @PostMapping(path = "/tickerId/{tickerId}")
     @ResponseStatus(HttpStatus.CREATED)
     public void createQuote(@PathVariable String tickerId) {

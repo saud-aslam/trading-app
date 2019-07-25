@@ -6,6 +6,7 @@ import ca.jrvs.apps.trading.dao.ResourceNotFoundException;
 import ca.jrvs.apps.trading.model.dto.IexQuote;
 import ca.jrvs.apps.trading.model.dto.Quote;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,13 +63,17 @@ public class QuoteService {
     public void initQuotes(List<String> tickers) {
 
         for (String ticker : tickers) {
+            if (quoteDao.existsById(ticker)) {
+                throw new IllegalArgumentException("Ticker already exists");
+            } else {
+                IexQuote iexQuote = marketDataDao.UnmarshallJson(ticker);
+                if (iexQuote == null) {
+                    throw new ResourceNotFoundException("Resource not found");
+                }
 
-            IexQuote iexQuote = marketDataDao.UnmarshallJson(ticker);
-            if (iexQuote == null) {
-                throw new ResourceNotFoundException("Resource not found");
+                quoteDao.save(buildQuoteFromIexQuote(iexQuote));
+
             }
-            quoteDao.save(buildQuoteFromIexQuote(iexQuote));
-
         }
 
     }
@@ -98,6 +103,21 @@ public class QuoteService {
      * @throws IllegalArgumentException                    for invalid input
      */
     public void updateMarketData() {
+        List<String> tickers = null;
+        try {
+            tickers = quoteDao.returnAllTickers();
+        } catch (DataAccessException e) {
+            System.out.println("Unable to retrieve data:" + e.getMessage());
+        }
 
+        for (String ticker : tickers) {
+            try {
+                quoteDao.deleteById(ticker);
+                initQuote(ticker);
+            } catch (ResourceNotFoundException e) {
+                e.getMessage();
+            }
+
+        }
     }
 }

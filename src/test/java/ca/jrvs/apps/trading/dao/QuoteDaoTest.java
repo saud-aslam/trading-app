@@ -55,4 +55,12 @@ public class QuoteDaoTest {
         assertTrue(quoteDao.existsById("FB"));
         assertFalse(quoteDao.existsById("HAHAHA"));
     }
+
+    @Test
+    public void returnAlltickers() {
+
+        System.out.println(quoteDao.returnAllTickers());
+    }
+
+
 }

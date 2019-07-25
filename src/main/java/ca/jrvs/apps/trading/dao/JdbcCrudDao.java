@@ -18,7 +18,7 @@ public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepositor
 
     private static final Logger logger = LoggerFactory.getLogger(JdbcCrudDao.class);
 
-    private String TableName;
+    public String TableName;
     private String IdName;
     private Class ClassName;
     private SimpleJdbcInsert simpleJdbcInsert;
@@ -126,7 +126,7 @@ public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepositor
         }
         String selectSql = "SELECT count(*) FROM " + TableName + " WHERE " + idName + " =?";
         int checker = jdbcTemplate.queryForObject(selectSql, Integer.class, id);
-        logger.info(String.valueOf(checker) + ":1 means successful deletion, 0 means unsucessful deletion ");
+        logger.info(String.valueOf(checker) + ":1 means exist, 0 means otherwise");
         return (checker == 1) ? true : false;
     }
 

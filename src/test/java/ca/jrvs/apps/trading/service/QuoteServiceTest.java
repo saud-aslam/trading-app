@@ -56,10 +56,14 @@ public class QuoteServiceTest {
 
     @Test
     public void initQuotes() {
-
         quoteService.initQuote("mcd");
-
     }
+
+    @Test
+    public void marketDataUpdate() {
+        quoteService.updateMarketData();
+    }
+
 }
 
 

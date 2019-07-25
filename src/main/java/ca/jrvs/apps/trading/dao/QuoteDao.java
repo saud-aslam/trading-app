@@ -6,12 +6,11 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class QuoteDao extends JdbcCrudDao<Quote, String> {
-
-
 
     @Autowired
     public QuoteDao(DataSource dataSource) {
@@ -19,12 +18,26 @@ public class QuoteDao extends JdbcCrudDao<Quote, String> {
     }
 
     public List<Quote> findAll() {
-        String sql = "SELECT * FROM  quote";
-
+        String sql = "SELECT * FROM " + TableName;
         List<Quote> quotes = jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper(Quote.class));
-
         return quotes;
+    }
+
+    public List<String> returnAllTickers() {
+        List<Quote> quotes = findAll();
+        List<String> tickersList = new ArrayList<>();
+        for (Quote quote : quotes) {
+            tickersList.add(quote.getTicker());
+        }
+        return tickersList;
+    }
+
+    public void update(List<Quote> quotes) {
+        for (Quote quote : quotes) {
+            deleteById(quote.getTicker());
+            save(quote);
+        }
     }
 
 }
