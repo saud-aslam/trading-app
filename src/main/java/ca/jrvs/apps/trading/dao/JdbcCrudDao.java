@@ -126,8 +126,8 @@ public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepositor
         }
         String selectSql = "SELECT count(*) FROM " + TableName + " WHERE " + idName + " =?";
         int checker = jdbcTemplate.queryForObject(selectSql, Integer.class, id);
-        logger.info(String.valueOf(checker) + ":1 means exist, 0 means otherwise");
-        return (checker == 1) ? true : false;
+        logger.info(String.valueOf(checker) + ":number means exist, 0 means doesnot exists");
+        return (checker != 0) ? true : false;
     }
 
 }
