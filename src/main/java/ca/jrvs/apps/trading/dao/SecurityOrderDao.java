@@ -10,7 +10,7 @@ public class SecurityOrderDao extends JdbcCrudDao<SecurityOrder, Integer> {
 
     @Autowired
     public SecurityOrderDao(DataSource dataSource) {
-        super(dataSource, "security_order", "id", Trader.class, true);
+        super(dataSource, "security_order", "id", SecurityOrder.class, true);
     }
 
     public boolean deletebyAccountId(Integer accountId) {
