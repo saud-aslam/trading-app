@@ -1,11 +1,11 @@
 
 package ca.jrvs.apps.trading.controller;
 
-import ca.jrvs.apps.trading.dao.MarketDataDao;
 import ca.jrvs.apps.trading.dao.TraderDao;
 import ca.jrvs.apps.trading.model.dto.Account;
 import ca.jrvs.apps.trading.model.dto.Trader;
 import ca.jrvs.apps.trading.model.view.TraderAccountView;
+import ca.jrvs.apps.trading.service.FundTransferService;
 import ca.jrvs.apps.trading.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,13 +20,14 @@ public class TraderController {
 
     private RegisterService registerService;
     private TraderDao traderDao;
+    private FundTransferService fundTransferService;
 
     @Autowired
     public TraderController(RegisterService registerService, TraderDao traderDao,
-                            MarketDataDao marketDataDao) {
+                            FundTransferService fundTransferService) {
         this.registerService = registerService;
         this.traderDao = traderDao;
-
+        this.fundTransferService = fundTransferService;
     }
 
     @DeleteMapping(path = "/traderId/{traderId}")
@@ -74,9 +75,9 @@ public class TraderController {
     @PutMapping(path = "/deposit/traderId/{traderId}/amount/{amount}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Account deposit(@PathVariable String traderId, @PathVariable String amount) {
+    public Account deposit(@PathVariable Integer traderId, @PathVariable Double amount) {
         try {
-            return null;//quoteDao.findAll();
+            return fundTransferService.deposit(traderId, amount);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -85,9 +86,9 @@ public class TraderController {
     @PutMapping(path = "/withdraw/traderId/{traderId}/amount/{amount}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Account withdraw(@PathVariable String traderId, @PathVariable String amount) {
+    public Account withdraw(@PathVariable Integer traderId, @PathVariable Double amount) {
         try {
-            return null;//marketDataDao.UnmarshallJson(ticker);
+            return fundTransferService.withdraw(traderId, amount);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
