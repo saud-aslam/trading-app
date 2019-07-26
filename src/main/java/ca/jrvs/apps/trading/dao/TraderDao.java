@@ -11,9 +11,4 @@ public class TraderDao extends JdbcCrudDao<Trader, Integer> {
         super(dataSource, "trader", "id", Trader.class, true);
     }
 
-    public boolean existsById(Integer traderId) {
-        return super.existsById("trader_id", traderId);
-
-    }
-
 }
