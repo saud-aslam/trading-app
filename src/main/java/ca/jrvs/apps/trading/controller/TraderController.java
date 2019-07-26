@@ -41,9 +41,10 @@ public class TraderController {
 
     @PostMapping(path = "/")
     @ResponseStatus(HttpStatus.OK)
-    public void putTraderandAccount(@RequestBody Trader trader) {
+    @ResponseBody
+    public TraderAccountView putTraderandAccount(@RequestBody Trader trader) {
         try {
-            //    traderDao.update(Collections.singletonList(trader));// implementation left
+            return registerService.createTraderAndAccount(trader);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
