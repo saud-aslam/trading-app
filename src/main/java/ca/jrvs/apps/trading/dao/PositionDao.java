@@ -3,10 +3,12 @@ package ca.jrvs.apps.trading.dao;
 import ca.jrvs.apps.trading.model.dto.Position;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
 
+@Repository
 public class PositionDao extends JdbcCrudDao<Position, Integer> {
 
     @Autowired

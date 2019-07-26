@@ -71,12 +71,12 @@ public class RegisterService {
      * @throws IllegalArgumentException                           for invalid input
      */
     public void deleteTraderById(Integer traderId) {
-        if (traderId != null) {
+        if (traderId == null) {
             throw new IllegalArgumentException("TraderId is not valid");
         }
 
         if (!(traderDao.existsById(traderId))) {
-            throw new ResourceNotFoundException("Account does not exists");
+            throw new ResourceNotFoundException("Trader does not exists");
         }
         Account account = accountDao.findByTraderId(traderId);
         if (account.getAmount() != 0.0) {
@@ -98,11 +98,11 @@ public class RegisterService {
         for (Field field : fields) {
             field.setAccessible(true);
             try {
-                if (field.get(trader) == null)
-                    return false;
+                if (field.get(trader) == null && field.getName() != "id") {
+                    throw new IllegalArgumentException("Trader has a null value at:" + field.getName());
+                }
             } catch (IllegalAccessException e) {
-                System.out.println("Trader has a null value at:" + field.getName());
-
+                e.getMessage();
             }
         }
         return true;
