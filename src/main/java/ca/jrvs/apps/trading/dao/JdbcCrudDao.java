@@ -110,7 +110,7 @@ public abstract class JdbcCrudDao<E extends Entity, ID> implements CrudRepositor
             logger.debug("Can't find quote id:" + id, e);
         }
         if (quote == null) {
-            throw new ResourceNotFoundException("Resource not found");
+            throw new ResourceNotFoundException("Er:Resource not found");
         }
         return quote;
     }
