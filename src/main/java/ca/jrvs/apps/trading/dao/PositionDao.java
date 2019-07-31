@@ -20,4 +20,9 @@ public class PositionDao extends JdbcCrudDao<Position, Integer> {
         String sql = "select * from position where account_id=?";
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Position.class), id);
     }
+
+    public Long getPosition(Integer id, String ticker) {
+        String sql = "select position from position where account_id=? and ticker=?";
+        return jdbcTemplate.queryForObject(sql, Long.class, id, ticker);
+    }
 }

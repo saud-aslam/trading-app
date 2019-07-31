@@ -58,32 +58,66 @@ public class OrderService {
         Double amount = 0.0;
         SecurityOrder securityOrder = new SecurityOrder();
         for (MarketOrderDto orderDto : orderDtos) {
-            if (orderDto.getSize() <= 0 || orderDto.getTicker() == null) {
+            if (orderDto.getAccountId() < 0 || orderDto.getTicker() == null) {
                 throw new IllegalArgumentException("Invalid input");
             }
+
 
             securityOrder.setAccountId(orderDto.getAccountId());
             securityOrder.setSize(orderDto.getSize());
             securityOrder.setTicker(orderDto.getTicker());
             try {
                 askPrice = (quoteDao.findById(orderDto.getTicker())).getAskPrice();
+                logger.info(String.valueOf(askPrice));
                 amount = (accountDao.findById(orderDto.getAccountId())).getAmount();
+                logger.info(String.valueOf(amount));
             } catch (DataAccessException e) {
                 e.getMessage();
             }
+            if (orderDto.getSize() > 0)
+                buy(amount, askPrice, securityOrder, orderDto);
 
-            if (amount < (orderDto.getSize() * askPrice)) {
-                securityOrder.setStatus(SecurityOrder.orderStatus.CANCELLED);
-                securityOrder.setNotes("You have less money in account, minimum should be " + orderDto.getSize() * askPrice);
-            } else {
-                securityOrder.setStatus(SecurityOrder.orderStatus.FILLED);
-                securityOrder.setNotes(null);
+            else
+                sell(amount, askPrice, securityOrder, orderDto);
 
-            }
 
         }
 
         return securityOrderDao.save(securityOrder);
     }
+
+    protected void buy(Double amount, Double askPrice, SecurityOrder securityOrder, MarketOrderDto orderDto) {
+        Double securityCost = (orderDto.getSize() * askPrice);
+        if (amount < securityCost) {
+            securityOrder.setStatus(SecurityOrder.orderStatus.CANCELLED);
+            securityOrder.setNotes("You have less money in account, minimum should be " + securityCost);
+        } else {
+            securityOrder.setPrice(askPrice);
+            securityOrder.setStatus(SecurityOrder.orderStatus.FILLED);
+            securityOrder.setNotes(null);
+            accountDao.updateAccountbyID(amount - securityCost, orderDto.getAccountId());
+
+        }
+
+    }
+
+    protected void sell(Double amount, Double askPrice, SecurityOrder securityOrder, MarketOrderDto orderDto) {
+        Long pos = positionDao.getPosition(orderDto.getAccountId(), orderDto.getTicker());
+
+        if (pos > -(orderDto.getSize())) {
+            Double securityCost = -(orderDto.getSize() * askPrice);
+            securityOrder.setPrice(askPrice);
+            securityOrder.setStatus(SecurityOrder.orderStatus.FILLED);
+            securityOrder.setNotes(null);
+            accountDao.updateAccountbyID(amount + securityCost, orderDto.getAccountId());
+        } else {
+            securityOrder.setStatus(SecurityOrder.orderStatus.CANCELLED);
+            securityOrder.setNotes("You have less security in account");
+        }
+
+    }
+
+
+
 
 }

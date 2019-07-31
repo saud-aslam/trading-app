@@ -27,11 +27,11 @@ public class OrderController {
     @ResponseBody
     public SecurityOrder putOrder(@RequestBody MarketOrderDto orderDto) {
         try {
-            orderService.executeMarketOrder(Collections.singletonList(orderDto));
+            return orderService.executeMarketOrder(Collections.singletonList(orderDto));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return null;
+
     }
 
 }

@@ -39,7 +39,9 @@ public class QuoteDaoTest {
     @Test
     public void findbyId() {
         Quote quote = quoteDao.findById("FB");
+        Double askPrice = (quoteDao.findById("FB").getAskPrice());
         assertEquals("FB", quote.getTicker());
+        System.out.println(askPrice);
 
     }
 
