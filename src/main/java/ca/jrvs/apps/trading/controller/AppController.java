@@ -14,7 +14,7 @@ public class AppController {
     @ResponseStatus(HttpStatus.OK)
     public String health() {
         try {
-            return "I am healthy!";
+            return "I am healthy! Springboot is running";
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
