@@ -1,4 +1,4 @@
-/**package ca.jrvs.apps.trading.dao;
+package ca.jrvs.apps.trading.dao;
 
 import ca.jrvs.apps.trading.model.dto.Quote;
 import org.junit.Test;
@@ -67,4 +67,4 @@ public class QuoteDaoTest {
 
 }
 
- */
+ 
