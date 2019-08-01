@@ -84,7 +84,7 @@ public class DashboardService {
         Account account = accountDao.findByTraderId(traderId);
         List<Position> positionList = positionDao.getPosition(account.getId());
         List<SecurityRows> securityRowss = new ArrayList<>();
-        ;
+      
         for (Position position : positionList) {
             Quote quote = quoteDao.findById(position.getTicker());
             securityRows.setQuote(quote);
