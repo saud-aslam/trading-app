@@ -1,0 +1,29 @@
+<assembly>
+    <fileSets>
+        <fileSet>
+            <directory>demo</directory>
+            <includes>
+                <include>*</include>
+            </includes>
+            <outputDirectory>/</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>trading_ddl</directory>
+            <includes>
+                <include>*</include>
+            </includes>
+            <outputDirectory>/trading_ddl</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>target</directory>
+            <includes>
+                <include>trading-1.0-SNAPSHOT.jar</include>
+            </includes>
+            <outputDirectory>/lib</outputDirectory>
+        </fileSet>
+    </fileSets>
+    <formats>
+        <format>tar.gz</format>
+    </formats>
+    <id>demo</id>
+</assembly>
