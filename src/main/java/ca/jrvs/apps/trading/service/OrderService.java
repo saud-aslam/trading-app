@@ -82,8 +82,8 @@ public class OrderService {
 
 
         }
-
-        return securityOrderDao.save(securityOrder);
+        SecurityOrder securityOrder1 = securityOrderDao.save(securityOrder);
+        return securityOrder1;
     }
 
     protected void buy(Double amount, Double askPrice, SecurityOrder securityOrder, MarketOrderDto orderDto) {
