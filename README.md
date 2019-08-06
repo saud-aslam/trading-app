@@ -29,6 +29,8 @@ $ source ~/.bash_profile
 <li>Initialize PostgreSQL and start SpringBoot application via <code>bash start_up.sh PSQL_HOST PSQL_USER PSQL_PASSWORD</code></li>
 <li>Consume the API through your browser by: <code>http://localhost:8080/swagger-ui.html</code></li>
 </ol>
+<img src="/assets/images/Swagger_UI.png" alt="Server-host"></p>
+
 <h2 id="rest-api-usage">REST API usage</h2>
 <h3 id="swagger">Swagger</h3>
 <p>Swagger is an open-source software framework backed by a large ecosystem of tools that helps developers design, build, document, and consume RESTful web services. By visualizing the endpoints of the program, it allows user to access function and execute them with the help of interactive GUI.</p>
@@ -66,6 +68,8 @@ $ source ~/.bash_profile
 </ul>
 <h2 id="architecture">Architecture</h2>
 <ul>
+<img src="/assets/images/Architect.png" alt="Server-host"></p>
+
 <li>
 <p>Draw a component diagram which contains controller, service, DAO, storage layers (you can mimic the diagram from the guide)</p>
 </li>
