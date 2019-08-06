@@ -87,7 +87,8 @@ $ source ~/.bash_profile
 <p><strong>DAO</strong>  - This layer performs the create, read, update, and delete actions on the database.</p>
 </li>
 <li>
-<p><strong>SpringBoot</strong>:</p>
+<p><strong>SpringBoot</strong>: 
+This framework is used to manage the application components i.e different layers together with Apache TomCat. Tomcat provides web servlet which maps HTTP request to appropriate methods inside the application.</p>
 </li>
 <li>
 <p><strong>PSQL Database</strong>  - This is the database used to store our data in the tables and views which would be persisted here. The data can always be retrieved back whenever we want to.</p>
