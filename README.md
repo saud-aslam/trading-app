@@ -1,4 +1,7 @@
+---
 
+
+---
 
 <h1 id="introduction">Introduction</h1>
 <p>This trading application is an online stock trading simulation REST API which can be used to create an account which would allow account holder to buy and sell stocks from Investor Exchange i.e IEX. Traders can withdraw money and/or deposit money into their account. They can also view latest quotes of any stock directly from this application.</p>
@@ -66,19 +69,34 @@ $ source ~/.bash_profile
 </ul>
 <h2 id="architecture">Architecture</h2>
 <ul>
-<li>Draw a component diagram which contains controller, service, DAO, storage layers (you can mimic the diagram from the guide)</li>
-<li>briefly explain the following logic layers or components (3-5 sentences for each)
-<ul>
-<li>Controller</li>
-<li>Service</li>
-<li>Dao</li>
-<li>SpringBoot: webservlet/TomCat and IoC</li>
-<li>PSQL and IEX</li>
-</ul>
+<li>
+<p>Draw a component diagram which contains controller, service, DAO, storage layers (you can mimic the diagram from the guide)</p>
+</li>
+<li>
+<p><strong>Controller</strong>  - This layer is what the user interact with. Together with Swagger UI, the function of this layer is to invoke the service layer (in most cases) based on the input from the user. The request is translated and the response is retrieved back to this layer where it is shown to user in JSON format.</p>
+</li>
+<li>
+<p><strong>Service</strong>  - This layer performs business logic and interacts with DAO layer. For example, validity of incoming Trader account details would be performed here before it being sent to TraderDao to be saved in the database.</p>
+</li>
+<li>
+<p><strong>DAO</strong>  - This layer performs the create, read, update, and delete actions on the database.</p>
+</li>
+<li>
+<p><strong>SpringBoot</strong>:</p>
+</li>
+<li>
+<p><strong>PSQL Database</strong>  - This is the database used to store our data in the tables and views which would be persisted here. The data can always be retrieved back whenever we want to.</p>
+</li>
+<li>
+<p><strong>IEX</strong>  - IEX provides us REST API  which we used to obtain stock information. By sending HTTP request to it, we get a response, which is parsed accrding to the needs.</p>
 </li>
 </ul>
-<p>Improvements</p>
+<h2 id="improvements">Improvements</h2>
 <ul>
-<li>at least 5 improvements</li>
+<li>We have assumed that trader and account has one-one to relation. This can be improved by allowing trader to have multiple accounts.</li>
+<li>Auto-increament ids once deleted can not be re-used. In some cases, it can be re-used in future implementation.</li>
+<li>Auto-updation of dailylist is possible and can be implemented in future.</li>
+<li>Email/sms alert can be set e.g when the price of specific security is changed.</li>
+<li>Once the market is closed, a trader can not trade in stocks. This can be improved by saving the quote  just before the market closes and used that to allow trader to trade and immediately execute their request when the market re-opens.</li>
 </ul>
 
