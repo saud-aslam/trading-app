@@ -29,6 +29,11 @@ $ source ~/.bash_profile
 <li>Initialize PostgreSQL and start SpringBoot application via <code>bash start_up.sh PSQL_HOST PSQL_USER PSQL_PASSWORD</code></li>
 <li>Consume the API through your browser by: <code>http://localhost:8080/swagger-ui.html</code></li>
   <img src="src/assets/images/Swagger_UI.PNG" alt="Server-host"></p>
+ <li>Postman can also be used to execute requests. Open_API  has to be imported using <code>http://localhost:8080/v2/api-docs</code> 
+  <img src="src/assets/images/Postman.PNG" alt="Server-host"></p>
+</li>
+
+
 
 </ol>
 
