@@ -1,4 +1,3 @@
-
 package ca.jrvs.apps.trading.controller;
 
 import ca.jrvs.apps.trading.dao.MarketDataDao;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
 
 @Controller
 @RequestMapping("/quote")
@@ -62,7 +60,6 @@ public class QuoteController {
             throw new RuntimeException(e);
         }
     }
-
 
     @GetMapping(path = "/dailyList")
     @ResponseStatus(HttpStatus.OK)

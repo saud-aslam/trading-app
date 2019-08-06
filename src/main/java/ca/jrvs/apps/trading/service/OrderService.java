@@ -62,7 +62,6 @@ public class OrderService {
                 throw new IllegalArgumentException("Invalid input");
             }
 
-
             securityOrder.setAccountId(orderDto.getAccountId());
             securityOrder.setSize(orderDto.getSize());
             securityOrder.setTicker(orderDto.getTicker());
@@ -79,7 +78,6 @@ public class OrderService {
 
             else
                 sell(amount, askPrice, securityOrder, orderDto);
-
 
         }
         SecurityOrder securityOrder1 = securityOrderDao.save(securityOrder);
@@ -116,8 +114,5 @@ public class OrderService {
         }
 
     }
-
-
-
 
 }

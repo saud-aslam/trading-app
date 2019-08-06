@@ -29,7 +29,7 @@ public class AppConfig {
 
     @Bean
     public MarketDataConfig marketDataConfig() {
-     MarketDataConfig marketDataConfig = new MarketDataConfig();
+        MarketDataConfig marketDataConfig = new MarketDataConfig();
         marketDataConfig.setHost("https://cloud.iexapis.com/");
         marketDataConfig.setToken("pk_22792cfad91547bb99f9c84f1c5041e2");
         return marketDataConfig;
@@ -44,7 +44,6 @@ public class AppConfig {
 
         return dataSource;
     }
-
 
     //http://bit.ly/2tWTmzQ connectionPool
     @Bean

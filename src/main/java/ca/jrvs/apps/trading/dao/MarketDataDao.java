@@ -38,7 +38,6 @@ public class MarketDataDao {
 
     }
 
-
     public List<IexQuote> UnmarshallJson(List<String> symbols) {
 
         String symbolsInString = symbols.stream().map(String::valueOf).collect(Collectors.joining(","));
@@ -72,7 +71,6 @@ public class MarketDataDao {
         return quotes.get(0);
 
     }
-
 
     public CloseableHttpClient getClientFromPool() {
         return HttpClients.custom().setConnectionManager(httpClientConnectionManager).setConnectionManagerShared(true)

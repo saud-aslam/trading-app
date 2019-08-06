@@ -21,14 +21,14 @@ public class Application implements CommandLineRunner {
     @Autowired
     private MarketDataDao marketDataDao;
     private Logger logger = LoggerFactory.getLogger((Application.class));
-     @Autowired
-     private DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
-     @Value("aapl,fb")
-     private String[] dailyList;
+    @Value("aapl,fb")
+    private String[] dailyList;
 
-     @Autowired
-     private QuoteService quoteService;
+    @Autowired
+    private QuoteService quoteService;
 
     @Value("aapl,fb")
     private List<String> symbols;

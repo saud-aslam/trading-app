@@ -1,5 +1,3 @@
-
-
 package ca.jrvs.apps.trading.service;
 
 import ca.jrvs.apps.trading.dao.MarketDataDao;

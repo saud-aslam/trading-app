@@ -123,6 +123,7 @@ public class OrderServiceTestInt {
         when(quoteDao.findById(anyString())).thenReturn(quote);
         when(accountDao.findById(anyInt())).thenReturn(savedAccount);
         when(positionDao.getPosition(anyInt(), anyString())).thenReturn((long) 4);
+
         List<MarketOrderDto> marketOrderDtos = Arrays.asList(savedOrderdtoSell);
         securityOrder = orderService.executeMarketOrder(marketOrderDtos);
 
@@ -138,6 +139,7 @@ public class OrderServiceTestInt {
         when(quoteDao.findById(anyString())).thenReturn(quote);
         when(accountDao.findById(anyInt())).thenReturn(savedAccount);
         when(positionDao.getPosition(anyInt(), anyString())).thenReturn((long) 2);
+
         List<MarketOrderDto> marketOrderDtos = Arrays.asList(savedOrderdtoSell);
         securityOrder = orderService.executeMarketOrder(marketOrderDtos);
 
