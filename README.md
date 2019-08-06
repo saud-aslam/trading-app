@@ -28,8 +28,9 @@ $ source ~/.bash_profile
 <code>sudo docker build -t jrvs-psql .</code></li>
 <li>Initialize PostgreSQL and start SpringBoot application via <code>bash start_up.sh PSQL_HOST PSQL_USER PSQL_PASSWORD</code></li>
 <li>Consume the API through your browser by: <code>http://localhost:8080/swagger-ui.html</code></li>
+  <img src="src/assets/images/Swagger_UI.PNG" alt="Server-host"></p>
+
 </ol>
-<img src="src/assets/images/Swagger_UI.PNG" alt="Server-host"></p>
 
 <h2 id="rest-api-usage">REST API usage</h2>
 <h3 id="swagger">Swagger</h3>
