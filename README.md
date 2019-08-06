@@ -28,9 +28,9 @@ $ source ~/.bash_profile
 <code>sudo docker build -t jrvs-psql .</code></li>
 <li>Initialize PostgreSQL and start SpringBoot application via <code>bash start_up.sh PSQL_HOST PSQL_USER PSQL_PASSWORD</code></li>
 <li>Consume the API through your browser by: <code>http://localhost:8080/swagger-ui.html</code></li>
-  <img src="src/assets/images/Swagger_UI.PNG" alt="Server-host"></p>
+  <img src="src/assets/images/Swagger_UI.PNG" alt="Swagger"></p>
  <li>Postman can also be used to execute requests. Open_API  has to be imported using <code>http://localhost:8080/v2/api-docs</code> 
-  <img src="src/assets/images/Postman.PNG" alt="Server-host"></p>
+  <img src="src/assets/images/Postman.PNG" alt="post-host"></p>
 </li>
 
 
@@ -74,11 +74,9 @@ $ source ~/.bash_profile
 </ul>
 <h2 id="architecture">Architecture</h2>
 <ul>
-<img src="/src/assets/images/Architect.PNG" alt="Server-host"></p>
+<img src="/src/assets/images/Architect.PNG" alt="Arc"></p>
 
-<li>
-<p>Draw a component diagram which contains controller, service, DAO, storage layers (you can mimic the diagram from the guide)</p>
-</li>
+
 <li>
 <p><strong>Controller</strong>  - This layer is what the user interact with. Together with Swagger UI, the function of this layer is to invoke the service layer (in most cases) based on the input from the user. The request is translated and the response is retrieved back to this layer where it is shown to user in JSON format.</p>
 </li>
