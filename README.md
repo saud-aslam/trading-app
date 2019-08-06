@@ -94,7 +94,7 @@ This framework is used to manage the application components i.e different layers
 <p><strong>PSQL Database</strong>  - This is the database used to store our data in the tables and views which would be persisted here. The data can always be retrieved back whenever we want to.</p>
 </li>
 <li>
-<p><strong>IEX</strong>  - IEX provides us REST API  which we used to obtain stock information. By sending HTTP request to it, we get a response, which is parsed accrding to the needs.</p>
+<p><strong>IEX</strong>  - IEX provides us REST API  which we used to obtain stock information. By sending HTTP request to it, we get a response, which is parsed according to the needs.</p>
 </li>
 </ul>
 <h2 id="improvements">Improvements</h2>
