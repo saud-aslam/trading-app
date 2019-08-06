@@ -20,7 +20,6 @@ public class QuoteDaoTest {
 
     @Test
     public void saveAnddeletebyId() {
-
         assertFalse(quoteDao.deleteById("HAHA"));
 
         Quote quote = new Quote();
@@ -31,6 +30,7 @@ public class QuoteDaoTest {
         quote.setBidPrice(122.0);
         quote.setId("Fake");
         quote.setLastPrice(12.0);
+
         assertEquals(quote, quoteDao.save(quote));
         assertTrue(quoteDao.deleteById("Fake"));
 
@@ -41,7 +41,6 @@ public class QuoteDaoTest {
         Quote quote = quoteDao.findById("FB");
         Double askPrice = (quoteDao.findById("FB").getAskPrice());
         assertEquals("FB", quote.getTicker());
-        System.out.println(askPrice);
     }
 
     @Test
@@ -52,14 +51,12 @@ public class QuoteDaoTest {
 
     @Test
     public void existbyId() {
-
         assertTrue(quoteDao.existsById("FB"));
         assertFalse(quoteDao.existsById("HAHAHA"));
     }
 
     @Test
     public void returnAlltickers() {
-
         System.out.println(quoteDao.returnAllTickers());
     }
 }
