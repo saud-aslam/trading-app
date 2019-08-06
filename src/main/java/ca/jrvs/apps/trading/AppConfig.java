@@ -31,16 +31,16 @@ public class AppConfig {
     public MarketDataConfig marketDataConfig() {
         MarketDataConfig marketDataConfig = new MarketDataConfig();
         marketDataConfig.setHost("https://cloud.iexapis.com/");
-        marketDataConfig.setToken("pk_22792cfad91547bb99f9c84f1c5041e2");
+        marketDataConfig.setToken(System.getenv("IEX_PUB_TOKEN"));
         return marketDataConfig;
     }
 
     @Bean
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/jrvstrading");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("password");
+        dataSource.setUrl(System.getenv("PSQL_URL"));
+        dataSource.setUsername(System.getenv("PSQL_USER"));
+        dataSource.setPassword(System.getenv("PSQL_PASSWORD"));
 
         return dataSource;
     }
