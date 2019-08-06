@@ -39,7 +39,7 @@ $ source ~/.bash_profile
 <p>Through this endpoint, IEX quotes are accessed through sending HTTP requests to the IEXCloud.</p>
 <ul>
 <li><code>GET '/quote/dailyList'</code>  - List all quotes securities already in the database.</li>
-<li><code>GET '/quote/iex/ticker/{ticker}</code> : Input IEX symbol and shows IEX market data’s quotes information.</li>
+<li><code>GET '/quote/iex/ticker/{ticker}</code> - Input IEX symbol and shows IEX market data’s quotes information.</li>
 <li><code>POST '/quote/ticker/{ticker}</code>  - Adds a new ticker to the Quote database</li>
 <li><code>PUT '/quote/</code>  - Allows user to manually insert quote data.</li>
 <li><code>PUT '/quote/iexMarketData'</code>  - Updates all quotes which are in database.</li>
