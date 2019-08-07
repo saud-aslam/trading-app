@@ -1,6 +1,7 @@
 package ca.jrvs.apps.trading;
 
 import ca.jrvs.apps.trading.model.config.MarketDataConfig;
+import ca.jrvs.apps.trading.util.StringUtil;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
@@ -37,10 +38,18 @@ public class AppConfig {
 
     @Bean
     public DataSource dataSource() {
+        String jdbcUrl;
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setUrl(System.getenv("PSQL_URL"));
-        dataSource.setUsername(System.getenv("PSQL_USER"));
-        dataSource.setPassword(System.getenv("PSQL_PASSWORD"));
+        if (!StringUtil.isEmpty(System.getenv("RDS_HOSTNAME"))) {
+            jdbcUrl = "jdbc:postgresql://" + System.getenv("RDS_HOSTNAME") + ":" + System.getenv("RDS_PORT") + "/jrvstrading";
+            dataSource.setUsername(System.getenv("RDS_USERNAME"));
+            dataSource.setPassword(System.getenv("RDS_PASSWORD"));
+            dataSource.setUrl(jdbcUrl);
+        } else {
+            dataSource.setUrl(System.getenv("PSQL_URL"));
+            dataSource.setUsername(System.getenv("PSQL_USER"));
+            dataSource.setPassword(System.getenv("PSQL_PASSWORD"));
+        }
 
         return dataSource;
     }
