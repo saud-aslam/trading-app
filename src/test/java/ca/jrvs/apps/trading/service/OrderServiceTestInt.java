@@ -90,9 +90,7 @@ public class OrderServiceTestInt {
         when(accountDao.findById(anyInt())).thenReturn(savedAccount);
 
         List<MarketOrderDto> marketOrderDtos = Arrays.asList(savedOrderDtoBuy);
-
         when(accountDao.updateAccountbyID(anyDouble(), anyInt())).thenReturn(savedAccount);
-
         securityOrder = orderService.executeMarketOrder(marketOrderDtos);
 
         verify(securityOrderDao).save(captorSecurityOrder.capture());

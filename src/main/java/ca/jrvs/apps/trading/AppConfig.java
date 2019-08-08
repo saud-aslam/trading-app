@@ -40,6 +40,7 @@ public class AppConfig {
     public DataSource dataSource() {
         String jdbcUrl;
         BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName("org.postgresql.Driver");
         if (!StringUtil.isEmpty(System.getenv("RDS_HOSTNAME"))) {
             jdbcUrl = "jdbc:postgresql://" + System.getenv("RDS_HOSTNAME") + ":" + System.getenv("RDS_PORT") + "/jrvstrading";
             dataSource.setUsername(System.getenv("RDS_USERNAME"));
