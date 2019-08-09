@@ -1,0 +1,22 @@
+<assembly>
+    <id>elastic-beanstalk</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <fileSets>
+        <fileSet>
+            <directory>target</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>trading-1.0-SNAPSHOT.jar</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <directory>psql/trading__ddl</directory>
+            <outputDirectory>/sql</outputDirectory>
+            <includes>
+                <include>*.sql</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>
