@@ -20,7 +20,7 @@ $ source ~/.bash_profile
 <li>Start docker<br>
 <code>sudo systemctl start docker</code></li>
 <li>Download the source code.<br>
-<code>https://github.com/saud-aslam/trading-app.git</code></li>
+<code>git clone https://github.com/saud-aslam/trading-app.git</code></li>
 <li>Build trading app<br>
 <code>sudo docker build -t trading-app .</code></li>
 <li>Build psql image<br>
@@ -74,7 +74,7 @@ $ source ~/.bash_profile
 </ul>
 <h2 id="architecture">Architecture</h2>
 <ul>
-<img src="/src/assets/images/Architect.PNG" alt="Arc"></p>
+<img src="/src/assets/images/Architec.png" alt="Arc"></p>
 
 
 <li>
