@@ -74,7 +74,7 @@ $ source ~/.bash_profile
 </ul>
 <h2 id="architecture">Architecture</h2>
 <ul>
-<img src="/src/assets/images/Architec.png" alt="Arc"></p>
+<img src="/src/assets/images/Architect.png" alt="Arc"></p>
 
 
 <li>
